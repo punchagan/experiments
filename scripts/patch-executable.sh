@@ -12,7 +12,16 @@ mkdir -p _build/default/lib
 patchelf --set-rpath '$ORIGIN/../lib' _build/default/bin/main.exe
 
 # Copy the required libraries to the lib directory
-cp /usr/lib/libgmp.so.10 _build/default/lib/
+LIBRARIES=$(ldd _build/default/bin/main.exe  | sed -n 's/.* => \([^ ]*\/[^ ]*\).*/\1/p' | grep '^/')
+
+for lib in $LIBRARIES; do
+    cp "$lib" _build/default/lib/
+    name=$(basename "$lib")
+    # FIXME: This is a workaround for indirect dependencies?
+    patchelf --set-rpath '$ORIGIN' _build/default/lib/"$name"
+done
+
+# muslc libc doesn't show up in this list
 cp /lib/libc.musl-x86_64.so.1 _build/default/lib/
 
 # Copy the musl dynamic linker to the lib directory
