@@ -44,6 +44,13 @@ problem. (Just as a hack to see if everything else works.)
 
 See also, https://github.com/curl/curl/issues/11411
 
+Each distro's package compiles `libcurl` with the correct path of the
+certificates. We'll need to compile our own version of curl and bundle our
+certificates file, if we want to dynamically link with libcurl.
+
+See Alpine's build [here](https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/main/curl/APKBUILD#L215-234). 
+See Arch's build [here](https://gitlab.archlinux.org/archlinux/packaging/packages/curl/-/blob/main/PKGBUILD?ref_type=heads#L68-81).
+
 ``` sh
 sudo ln -s /usr/lib/ssl/cert.pem /etc/ssl/cert.pem
 ```
