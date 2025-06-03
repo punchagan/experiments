@@ -1,0 +1,4 @@
+(executable
+ (public_name test_dynamic)
+ (name main)
+ (libraries curl zarith))
