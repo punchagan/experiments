@@ -29,7 +29,7 @@ be easier, though it might be possible that glibc is easy enough too.
    ./scripts/patch-executable.sh 
    ```
    
-5. From the host machine, run the executable and `ldd` on it...
+5. From the **host machine**, run the executable and `ldd` on it...
 
    ```sh
    ldd _build/default/bin/main.exe
@@ -50,6 +50,10 @@ certificates file, if we want to dynamically link with libcurl.
 
 See Alpine's build [here](https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/main/curl/APKBUILD#L215-234). 
 See Arch's build [here](https://gitlab.archlinux.org/archlinux/packaging/packages/curl/-/blob/main/PKGBUILD?ref_type=heads#L68-81).
+
+Not sure if the `--disable-shared`
+[here](https://github.com/semgrep/semgrep/blob/develop/scripts/build-static-libcurl.sh#30) also bundles the certificates? If not, how does this binary work on any
+distro??!
 
 ``` sh
 sudo ln -s /usr/lib/ssl/cert.pem /etc/ssl/cert.pem
