@@ -35,3 +35,15 @@ be easier, though it might be possible that glibc is easy enough too.
    ldd _build/default/bin/main.exe
    _build/default/bin/main.exe
    ```
+
+Note, the curl code fails with `Error: error setting certificate file:
+/etc/ssl/cert.pem ` when running the binary build on Alpine in Ubuntu.
+
+But, linking the certificates file from `/usr/lib/ssl/cert.pem` fixes this
+problem. (Just as a hack to see if everything else works.)
+
+See also, https://github.com/curl/curl/issues/11411
+
+``` sh
+sudo ln -s /usr/lib/ssl/cert.pem /etc/ssl/cert.pem
+```
