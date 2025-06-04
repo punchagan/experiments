@@ -26,10 +26,8 @@ jobs:
         with:
           ocaml-compiler: 5.3.0
 
-      - name: Init and install opam packages
+      - name: Install opam packages
         run: |
-          opam init -y
-          opam switch create 5.3.0
           eval $(opam env)
           opam install . --deps-only -y --confirm-level=unsafe-yes
 
