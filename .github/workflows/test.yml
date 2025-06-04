@@ -4,22 +4,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-macos-14:
-    runs-on: macos-14
+  test:
+    strategy:
+      matrix:
+        macos-version: [macos-13, macos-14, macos-15]
+
+    runs-on: ${{ matrix.macos-version }}
     timeout-minutes: 60
+    name: Test on ${{ matrix.macos-version }}
 
     steps:
-      - name: Start tmate session (detached, early)
-        uses: mxschmitt/action-tmate@v3
-        with:
-          detached: true
-
-  test-macos-15:
-    runs-on: macos-15
-    timeout-minutes: 60
-
-    steps:
-      - name: Start tmate session (detached, early)
+      - name: Start tmate session
         uses: mxschmitt/action-tmate@v3
         with:
           detached: true

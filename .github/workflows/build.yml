@@ -5,14 +5,20 @@ on:
 
 jobs:
   build:
-    runs-on: macos-15
+    strategy:
+      matrix:
+        macos-version: [macos-13, macos-14, macos-15]
+
+    runs-on: ${{ matrix.macos-version }}
     timeout-minutes: 60
+
+    name: Build on ${{ matrix.macos-version }}
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Start tmate session (detached, early)
+      - name: Start tmate session
         uses: mxschmitt/action-tmate@v3
         with:
           detached: true
@@ -46,5 +52,5 @@ jobs:
       - name: Upload bundled binary
         uses: actions/upload-artifact@v4
         with:
-          name: macos-dist-bundle
+          name: dist-${{ matrix.macos-version }}
           path: dist/
