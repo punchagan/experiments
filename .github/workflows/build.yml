@@ -31,9 +31,20 @@ jobs:
           eval $(opam env)
           opam install . --deps-only -y --confirm-level=unsafe-yes
 
-      - name: Build project
+      - name: Build and Run
         run: |
           eval $(opam env)
           which opam
           dune build
           dune exec -- bin/main.exe
+
+      - name: Patch executable
+        run: |
+          eval $(opam env)
+          ./scripts/patch-macos-executable.sh
+
+      - name: Upload bundled binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-dist-bundle
+          path: dist/
