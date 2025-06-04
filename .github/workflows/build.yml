@@ -36,4 +36,6 @@ jobs:
       - name: Build project
         run: |
           eval $(opam env)
+          which opam
           dune build
+          dune exec -- bin/main.exe
