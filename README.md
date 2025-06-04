@@ -42,19 +42,11 @@ Note, the curl code fails with `Error: error setting certificate file:
 But, linking the certificates file from `/usr/lib/ssl/cert.pem` fixes this
 problem. (Just as a hack to see if everything else works.)
 
-See also, https://github.com/curl/curl/issues/11411
-
-Each distro's package compiles `libcurl` with the correct path of the
-certificates. We'll need to compile our own version of curl and bundle our
-certificates file, if we want to dynamically link with libcurl.
-
-See Alpine's build [here](https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/main/curl/APKBUILD#L215-234). 
-See Arch's build [here](https://gitlab.archlinux.org/archlinux/packaging/packages/curl/-/blob/main/PKGBUILD?ref_type=heads#L68-81).
-
-Not sure if the `--disable-shared`
-[here](https://github.com/semgrep/semgrep/blob/develop/scripts/build-static-libcurl.sh#30) also bundles the certificates? If not, how does this binary work on any
-distro??!
-
 ``` sh
 sudo ln -s /usr/lib/ssl/cert.pem /etc/ssl/cert.pem
 ```
+
+[This
+patch](https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/85193)
+should fix the problem in a future version of Alpine.
+
